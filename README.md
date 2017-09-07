@@ -2,19 +2,17 @@
 
 Use AWS Lambda to fetch your Sungrow Solar metrics and send these to the PVOutput website.
 
+Inspired by [kronicd/sungrow2pvoutput](https://github.com/kronicd/sungrow2pvoutput).
+
 ## Installation
 
-Install serverless
+Install [serverless](https://serverless.com/framework/docs/providers/aws/guide/installation/).
 
 ```
 npm install serverless
 ```
 
-Setup your AWS Profile
-
-```
-export AWS_PROFILE=default && export AWS_REGION=us-west-1
-```
+Setup your AWS Profile as per [Serverless guidelines](https://serverless.com/framework/docs/providers/aws/guide/credentials/).
 
 In AWS, create a Parameter Store key called "sungrow_time" and set the value
 to "nil".
