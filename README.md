@@ -4,7 +4,17 @@ Use AWS Lambda to fetch your Sungrow Solar metrics and send these to the PVOutpu
 
 Inspired by [kronicd/sungrow2pvoutput](https://github.com/kronicd/sungrow2pvoutput).
 
+Herculis downloads the Sungrow metrics from:
+
+![alt tag](docs/sungrow_pic.png)
+
+And uploads the relevant data to the PVOutput.org site:
+
+![alt tag](docs/pvoutput_pic.png)
+
 ## Installation
+
+Herculis is an AWS Lambda function written in Python. To ease the setup and configuration of this Lamdba, Serverless is used to deploy the code and it's dependancies.
 
 Install [serverless](https://serverless.com/framework/docs/providers/aws/guide/installation/).
 
@@ -39,3 +49,5 @@ Deploy Herculis
 ```
 serverless deploy 
 ```
+
+Now browse to your PVOutput.org system.
