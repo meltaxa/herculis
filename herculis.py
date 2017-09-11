@@ -106,7 +106,7 @@ def gather_tags_from_param_store(paramname):
     except ValueError:
         raise
     if len(params.get('Parameters', [])) != 1:
-        raise ValueError("No parameter with name '%s' found." % paramname)
+        return "nil"
     try:
         tag_value = params.get('Parameters')[0].get('Value', '')
     except ValueError as err:
