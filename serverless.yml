@@ -14,8 +14,10 @@ provider:
         - "ssm:PutParameter"
       Resource: "arn:aws:ssm:*:*:*"
   environment:
+    # PVOutput API settings, see https://pvoutput.org/account.jsp
     pvo_key: XXXXXXXX
     pvo_systemid: XXXXXXXX
+    # Sungrow settings
     sgDeviceId: XXXXXXXX
     sgUserId: XXXXXXXX
 
