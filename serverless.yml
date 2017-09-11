@@ -2,9 +2,11 @@ service: herculis
 
 provider:
   name: aws
+  stage: production
   runtime: python2.7
-  region: us-east-1
+  region: us-west-2
   memorySize: 128
+  timeout: 300
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -18,6 +20,13 @@ provider:
     sgPlantId: XXXXXXXX
     sgUserId: XXXXXXXX
 
+package:
+  include:
+    - herculis.py
+  exclude:
+    - .git/**
+    - docs/**
+    - README.md
 functions:
   liveUpdate:
     handler: herculis.lambda_handler
