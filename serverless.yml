@@ -28,7 +28,9 @@ package:
     - docs/**
     - README.md
 functions:
-  liveUpdate:
+  herculis:
+    name: herculis
+    description: Fetch latest Solar metrics and send to PV Output
     handler: herculis.lambda_handler
     events:
       - schedule:
