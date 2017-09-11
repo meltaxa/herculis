@@ -2,15 +2,17 @@
 
 Use AWS Lambda to fetch your Sungrow Solar metrics and send these to the PVOutput website.
 
-Herculis downloads the Sungrow metrics from:
+Herculis downloads the Sungrow metrics from the [SolarInfo Bank](http://www.solarinfobank.com/):
 
 ![alt tag](docs/sungrow_pic.png)
 
-And uploads the relevant data to the PVOutput.org site:
+And uploads the relevant data to [PVOutput.org](https://pvoutput.org):
 
 ![alt tag](docs/pvoutput_pic.png)
 
 ## Prequisites
+
+Your Sungrow inverter is registered to their SolarInfo Bank site. 
 
 An [AWS account](https://aws.amazon.com). Herculis is an AWS Lamdba function. 
 If this will be your only Lambda function, you will remain within the 
