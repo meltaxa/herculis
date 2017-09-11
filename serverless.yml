@@ -17,7 +17,6 @@ provider:
     pvo_key: XXXXXXXX
     pvo_systemid: XXXXXXXX
     sgDeviceId: XXXXXXXX
-    sgPlantId: XXXXXXXX
     sgUserId: XXXXXXXX
 
 package:
@@ -34,5 +33,7 @@ functions:
     handler: herculis.lambda_handler
     events:
       - schedule:
+          name: run-lambda-herculis-every-five-mins
           rate: cron(0/5 * * * ? *)
+          description: Used by the Herculis Lamdba function.
           enabled: true

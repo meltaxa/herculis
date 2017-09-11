@@ -38,40 +38,53 @@ deploy the code and it's dependancies.
 
 4. Edit serverless.yml and update the following API credentials.
 
-   For PVOutput, you can find these under Settings.
-
-   For Sungrow Solarinfo Bank, you will need to traverse the website to discover
-   your Device ID, User ID and Plant ID. Start at 
-   http://www.solarinfobank.com/user/allplants and click on your Plant Name and 
-   then click edit. Each time noting the URL parameters called.
-
    ```
+   # PVOutput API settings, see https://pvoutput.org/account.jsp
    pvo_key: XXXXXXXX
    pvo_systemid: XXXXXXXX
+   # Sungrow settings
    sgDeviceId: XXXXXXXX
-   sgPlantId: XXXXXXXX
    sgUserId: XXXXXXXX
    ```
 
-### AWS setup
+   For PVOutput, you can find these under [Settings](https://pvoutput.org/account.jsp).
 
-5. In AWS, switch to the respective AWS region (as defined in your 
-serverless.yml file). 
+   For Sungrow's Solarinfo Bank, you will need to traverse their website to 
+   discover your Device ID and User ID. Following these instructions if you are
+   using the Google Chrome web browser.
 
-   Navigate to EC2 services and under Systems Manager Shared Resources, create a 
-   Parameter Store parameter named "sungrow_time" and set the value to "nil".
+   In Chrome, login to Sungrow's SolarInfo Bank site at 
+   [http://www.solarinfobank.com](http://www.solarinfobank.com). 
+
+   Enable Developer Tools (under View and Developer menus). 
+
+   Click on the Network tab and ensure recording is enabled.
+
+   Navigate to Device Data on Sungrow's site.
+
+   In the Developer Tools window, look for the Name that
+   looks like `?unitId=123456&deviceId=123456`. For example: 
+
+   ```
+   http://www.solarinfobank.com/plant/devicestructtree/12345?unitid=54321&deviceid=123456789.
+   ```
+
+   In the above example, the sgUserId will be the number after 
+   devicestructuretree, in this case 12345.
+
+   The sgDeviceId in this case is 123456789.
 
 ### Deployment
 
-6. Deploy Herculis:
+5. Deploy Herculis:
 
-   On your local workstation, deploy Herculis:
+   From your local workstation, deploy Herculis to AWS:
 
    ```
    serverless deploy 
    ```
 
-7. Now browse to your PVOutput.org system.
+6. Now browse to your [PVOutput.org](https://pvoutput.org/) system.
 
 ## Acknowledgements
 
