@@ -19,7 +19,7 @@ provider:
     pvo_systemid: XXXXXXXX
     # Sungrow settings
     sgDeviceId: XXXXXXXX
-    sgUserId: XXXXXXXX
+    sgUnitId: XXXXXXXX
 
 package:
   include:

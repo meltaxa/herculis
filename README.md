@@ -46,7 +46,7 @@ deploy the code and it's dependancies.
    pvo_systemid: XXXXXXXX
    # Sungrow settings
    sgDeviceId: XXXXXXXX
-   sgUserId: XXXXXXXX
+   sgUnitId: XXXXXXXX
    ```
 
    For PVOutput, you can find these under [Settings](https://pvoutput.org/account.jsp).
@@ -71,8 +71,8 @@ deploy the code and it's dependancies.
    http://www.solarinfobank.com/plant/devicestructtree/12345?unitid=54321&deviceid=123456789.
    ```
 
-   In the above example, the sgUserId will be the number after 
-   devicestructuretree, in this case 12345.
+   In the above example, the sgUnitId will be the number after 
+   uitid, in this case 54321.
 
    The sgDeviceId in this case is 123456789.
 

@@ -16,7 +16,7 @@ pvo_systemid = os.environ['pvo_systemid']
 pvo_statusInterval = 5
 
 sgDeviceId = os.environ['sgDeviceId']
-sgUserId = os.environ['sgUserId']
+sgUnitId = os.environ['sgUnitId']
 sgPlantId = os.environ['sgPlantId']
 apiDelay = 1 # time to delay after API calls
 
@@ -125,7 +125,7 @@ def update_tag_from_param_store(paramname, paramvalue):
         raise    
 
 def getSolarLastUpdateTime():
-    response = urllib2.urlopen('http://www.solarinfobank.com/aapp/UnitDevices?uid='+sgUserId+'&lan=en-us')
+    response = urllib2.urlopen('http://www.solarinfobank.com/aapp/UnitDevices?uid='+sgUnitId+'&lan=en-us')
     result = response.read()
     payload  = json.loads(result)
     return str(payload['units'][0]['devices'][0]['lastUpdatedTime'])
