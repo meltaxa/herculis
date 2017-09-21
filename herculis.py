@@ -16,8 +16,6 @@ pvo_systemid = os.environ['pvo_systemid']
 pvo_statusInterval = 5
 
 sgDeviceId = os.environ['sgDeviceId']
-sgUnitId = os.environ['sgUnitId']
-sgPlantId = os.environ['sgPlantId']
 apiDelay = 1 # time to delay after API calls
 
 class Connection():
@@ -99,48 +97,11 @@ def getSungrowData(start=time.strftime("%Y%m%d")):
     cr = csv.reader(response)
     return cr
     
-def gather_tags_from_param_store(paramname):
-    ssm = boto3.client('ssm')
-    try:
-        params = ssm.get_parameters(Names=[paramname])
-    except ValueError:
-        raise
-    if len(params.get('Parameters', [])) != 1:
-        return "nil"
-    try:
-        tag_value = params.get('Parameters')[0].get('Value', '')
-    except ValueError as err:
-        print "Invalid tag paramter given: %s", err
-        raise
-    return tag_value
-
-def update_tag_from_param_store(paramname, paramvalue):
-    ssm = boto3.client('ssm')
-    try:
-        params = ssm.put_parameter(Name=paramname,
-                                   Value=paramvalue,
-                                   Type="String",
-                                   Overwrite=True)
-    except ValueError:
-        raise    
-
-def getSolarLastUpdateTime():
-    response = urllib2.urlopen('http://www.solarinfobank.com/aapp/UnitDevices?uid='+sgUnitId+'&lan=en-us')
-    result = response.read()
-    payload  = json.loads(result)
-    return str(payload['units'][0]['devices'][0]['lastUpdatedTime'])
-
 def lambda_handler(event, context):
-    last_time = gather_tags_from_param_store("sungrow_time")
     pvoutz = Connection(pvo_key, pvo_systemid, pvo_host)
     PVOStatus = pvoutz.get_status()
     date = PVOStatus.split(",")[0]
     timez = PVOStatus.split(",")[1]
-    solarUpdated = datetime.datetime.strptime(getSolarLastUpdateTime(), '%Y-%m-%d %H:%M:%S')
-    solarUpdateTime = datetime.datetime.strftime(solarUpdated, '%Y%m%d %H:%M')
-    if solarUpdateTime == last_time:
-        print "No updates found."
-        return
     datez = datetime.datetime.strptime(date + " " + timez, "%Y%m%d %H:%M")
     datez += datetime.timedelta(minutes=5)
     date = datetime.datetime.strftime(datez, "%Y%m%d")
@@ -164,5 +125,4 @@ def lambda_handler(event, context):
             data = date + "," + str(powerTime) + "," + str(powerOut) + ",," + str(consumption) + ",," + str(batteryTemp) +',;'
             print "Time: " + data + " " + str(powerTime) + " KW: " + str(powerOut) + " e-day: " + str(consumption) + " temp: " + str(batteryTemp) + " vdc: " + str(vdc)
             pvoutz.add_status(date, powerTime, power_exp=powerOut, power_imp=consumption, temp=batteryTemp, vdc=str(vdc))
-            update_tag_from_param_store("sungrow_time", date + " " + powerTime)
             time.sleep(apiDelay)

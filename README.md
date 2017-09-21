@@ -46,13 +46,12 @@ deploy the code and it's dependancies.
    pvo_systemid: XXXXXXXX
    # Sungrow settings
    sgDeviceId: XXXXXXXX
-   sgUnitId: XXXXXXXX
    ```
 
    For PVOutput, you can find these under [Settings](https://pvoutput.org/account.jsp).
 
    For Sungrow's Solarinfo Bank, you will need to traverse their website to 
-   discover your Device ID and User ID. Following these instructions if you are
+   discover your Device ID. Following these instructions if you are
    using the Google Chrome web browser.
 
    In Chrome, login to Sungrow's SolarInfo Bank site at 
@@ -70,9 +69,6 @@ deploy the code and it's dependancies.
    ```
    http://www.solarinfobank.com/plant/devicestructtree/12345?unitid=54321&deviceid=123456789.
    ```
-
-   In the above example, the sgUnitId will be the number after 
-   uitid, in this case 54321.
 
    The sgDeviceId in this case is 123456789.
 
