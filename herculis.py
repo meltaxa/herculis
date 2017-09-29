@@ -27,6 +27,8 @@ class Connection():
     def get_status(self, date=None, time=None):
         """
         Retrieves status information
+        Return example:
+          20101107,18:30,12936,202,NaN,NaN,5.280,15.3,240.1
         """
         path = '/service/r2/getstatus.jsp'
         params = {}
@@ -39,7 +41,8 @@ class Connection():
         response = self.make_request("GET", path, params)
 
         if response.status == 400:
-            raise ValueError(response.read())
+            # Initialise a "No status found"
+            return "%s,00:00,,,,,,," % time.strftime("%Y%m%d")
         if response.status != 200:
             raise StandardError(response.read())
 
