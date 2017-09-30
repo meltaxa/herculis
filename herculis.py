@@ -112,20 +112,32 @@ def lambda_handler(event, context):
     print "Loading %s %s" % (date, timez)
     sOut = getSungrowData(date)
     count = 0
+    model = ""
     for row in sOut:
         count += 1
+        if count == 1:
+            if "SH5K" in row[0]:
+                model = "SH5K"
+            else:
+                model = "SG5KTL"
         if count < 3:
             continue
         if row[0] > timez:
             powerTime = datetime.datetime.strptime(row[0], '%H:%M:%S')
             powerTime = datetime.datetime.strftime(powerTime, '%H:%M')
-            powerOut = row[7]
-            consumption = row[18]
-            batteryTemp = row[11]
-            voltage1 = float(row[1])
-            voltage2 = float(row[4])
+            if model == "SH5K":
+                powerOut = row[7]
+                consumption = row[18]
+                temp = row[11]
+                voltage1 = float(row[1])
+                voltage2 = float(row[4])
+            else:
+                powerOut = float(row[11])*1000
+                consumption = float(row[1])*1000
+                temp = row[3]
+                voltage1 = float(row[4])
+                voltage2 = float(row[6])
             vdc = (voltage1 + voltage2)/2
-            data = date + "," + str(powerTime) + "," + str(powerOut) + ",," + str(consumption) + ",," + str(batteryTemp) +',;'
-            print "Time: " + data + " " + str(powerTime) + " KW: " + str(powerOut) + " e-day: " + str(consumption) + " temp: " + str(batteryTemp) + " vdc: " + str(vdc)
-            pvoutz.add_status(date, powerTime, power_exp=powerOut, power_imp=consumption, temp=batteryTemp, vdc=str(vdc))
+            print "Time: " + str(powerTime) + " KW: " + str(powerOut) + " Load: " + str(consumption) + " Temp: " + str(temp) + " VDC: " + str(vdc)
+            pvoutz.add_status(date, powerTime, power_exp=powerOut, power_imp=consumption, temp=temp, vdc=str(vdc))
             time.sleep(apiDelay)
