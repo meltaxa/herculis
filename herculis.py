@@ -42,7 +42,7 @@ class Connection():
 
         if response.status == 400:
             # Initialise a "No status found"
-            return "%s,00:00,,,,,,," % time.strftime("%Y%m%d")
+            return "%s,00:00,,,,,,," % datetime.datetime.now().strftime('%Y%m%d')
         if response.status != 200:
             raise StandardError(response.read())
 
