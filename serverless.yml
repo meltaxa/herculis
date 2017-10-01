@@ -7,12 +7,20 @@ provider:
   region: us-west-2
   memorySize: 128
   timeout: 300
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "ssm:GetParameters"
+        - "ssm:PutParameter"
+      Resource: "arn:aws:ssm:*:*:*"
   environment:
     # PVOutput API settings, see https://pvoutput.org/account.jsp
     pvo_key: XXXXXXXX
     pvo_systemid: XXXXXXXX
     # Sungrow settings
     sgDeviceId: XXXXXXXX
+    sgUnitId: XXXXXXXX
+    tzOffset: XX
 
 package:
   include:
