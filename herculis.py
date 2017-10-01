@@ -14,6 +14,7 @@ pvo_host= "pvoutput.org"
 pvo_key = os.environ['pvo_key']
 pvo_systemid = os.environ['pvo_systemid']
 pvo_statusInterval = 5
+tzOffset = float(os.environ['tzOffset'])
 
 sgDeviceId = os.environ['sgDeviceId']
 apiDelay = 1 # time to delay after API calls
@@ -101,14 +102,19 @@ def getSungrowData(start=time.strftime("%Y%m%d")):
     return cr
     
 def lambda_handler(event, context):
+    now = datetime.datetime.now() + datetime.timedelta(hours=tzOffset)
     pvoutz = Connection(pvo_key, pvo_systemid, pvo_host)
     PVOStatus = pvoutz.get_status()
     date = PVOStatus.split(",")[0]
     timez = PVOStatus.split(",")[1]
     datez = datetime.datetime.strptime(date + " " + timez, "%Y%m%d %H:%M")
     datez += datetime.timedelta(minutes=5)
-    date = datetime.datetime.strftime(datez, "%Y%m%d")
-    timez = datetime.datetime.strftime(datez, "%H:%M")
+    if datez.date() < now.date():
+        date = datetime.datetime.strftime(now, "%Y%m%d")
+        timez = "00:00"
+    else:
+        date = datetime.datetime.strftime(datez, "%Y%m%d")
+        timez = datetime.datetime.strftime(datez, "%H:%M")
     print "Loading %s %s" % (date, timez)
     sOut = getSungrowData(date)
     count = 0

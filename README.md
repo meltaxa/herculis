@@ -38,7 +38,7 @@ deploy the code and it's dependancies.
 
 3. Setup your AWS Profile as per [Serverless guidelines](https://serverless.com/framework/docs/providers/aws/guide/credentials/).
 
-4. Edit serverless.yml and update the following API credentials.
+4. Edit serverless.yml and update the following API credentials and UTC timezone offset:
 
    ```
    # PVOutput API settings, see https://pvoutput.org/account.jsp
@@ -46,6 +46,8 @@ deploy the code and it's dependancies.
    pvo_systemid: XXXXXXXX
    # Sungrow settings
    sgDeviceId: XXXXXXXX
+   # UTC timezone offset in hours, for example Brisbane/Australia wound be 10.0
+   tzOffset: XX
    ```
 
    For PVOutput, you can find these under [Settings](https://pvoutput.org/account.jsp).
