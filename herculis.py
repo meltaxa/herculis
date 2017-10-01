@@ -129,6 +129,8 @@ def lambda_handler(event, context):
         if count < 3:
             continue
         if row[0] > timez:
+            if row[1] == "":
+                continue
             powerTime = datetime.datetime.strptime(row[0], '%H:%M:%S')
             powerTime = datetime.datetime.strftime(powerTime, '%H:%M')
             if model == "SH5K":
