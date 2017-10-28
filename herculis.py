@@ -48,6 +48,24 @@ class Connection():
             raise StandardError(response.read())
 
         return response.read()
+
+    def add_output(self, date, comment):
+        """
+        Update PVOutput with Herculis' own status message.
+        """
+        path = '/service/r2/addoutput.jsp'
+        params = {
+                 'd': date
+        }
+        params['cm'] = comment
+        params = urllib.urlencode(params)
+
+        response = self.make_request('POST', path, params)
+
+        if response.status == 400:
+            raise ValueError(response.read())
+        if response.status != 200:
+            raise StandardError(response.read())       
         
     def add_status(self, date, time, energy_exp=None, power_exp=None, energy_imp=None, power_imp=None, temp=None, vdc=None, cumulative=False):
         """
@@ -149,3 +167,5 @@ def lambda_handler(event, context):
             print "Time: " + str(powerTime) + " KW: " + str(powerOut) + " Load: " + str(consumption) + " Temp: " + str(temp) + " VDC: " + str(vdc)
             pvoutz.add_status(date, powerTime, power_exp=powerOut, power_imp=consumption, temp=temp, vdc=str(vdc))
             time.sleep(apiDelay)
+    now_fmt = datetime.datetime.strftime(now, '%H:%M')
+    pvoutz.add_output(date, "Monitored by Herculis at %s" % now_fmt)
