@@ -89,3 +89,9 @@ deploy the code and it's dependancies.
 ## Acknowledgements
 
 The python interface to PV Output API was forked from [sungrow2pvoutput](https://github.com/kronicd/sungrow2pvoutput).
+
+## Donation
+
+If this project helped you save time, you can buy me a beer :)
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/Mellican/6) 
